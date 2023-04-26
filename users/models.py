@@ -45,7 +45,7 @@ class User(AbstractBaseUser):
         unique=True,
     )
 
-    name = models.CharField(max_length=10, unique=True,)
+    username = models.CharField(max_length=10, unique=True,)
 
     gender_choices = [
         # ('선택', None),
@@ -74,7 +74,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["gender", "intro"]
+    REQUIRED_FIELDS = ["username", "gender", "age", "intro"]
 
     def __str__(self):
         return self.email
