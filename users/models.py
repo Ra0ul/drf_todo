@@ -3,35 +3,23 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, username, gender, age, intro, password=None):
+    def create_user(self, email, password=None):
 
         if not email:
             raise ValueError("Users must have an email address")
 
         user = self.model(
             email=self.normalize_email(email),
-            username=username,
-            gender=gender,
-            age=age,
-            intro=intro
-        )
 
+        )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, gender, age, intro, password=None):
-        """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
-        """
+    def create_superuser(self, email, password=None):
         user = self.create_user(
-            email,
+            email=self.normalize_email(email),
             password=password,
-            username=username,
-            gender=gender,
-            age=age,
-            intro=intro
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -45,14 +33,9 @@ class User(AbstractBaseUser):
         unique=True,
     )
 
-    username = models.CharField(max_length=10, unique=True,)
+    name = models.CharField(max_length=10)
 
     gender_choices = [
-        # ('선택', None),
-        # ('남성', 'M'),
-        # ('여성', 'W'),
-        # ('선택하지 않음', 'N')
-        (None, '선택'),
         ('M', '남성'),
         ('W', '여성'),
         ('N', '선택하지 않음')
@@ -61,10 +44,11 @@ class User(AbstractBaseUser):
     gender = models.CharField(
         max_length=1,
         choices=gender_choices,
-        default='선택',
+        default='N'
+
     )
 
-    age = models.PositiveSmallIntegerField(default=0)
+    age = models.PositiveSmallIntegerField()
 
     intro = models.TextField()
 
@@ -74,7 +58,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "gender", "age", "intro"]
+    REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email
