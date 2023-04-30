@@ -34,7 +34,9 @@ class ProfileView(APIView):
         return Response({"message": "프로필 수정 완료!"}, status=status.HTTP_201_CREATED)
 
     def delete(self, request):
-        return Response({"message": "가입완료!"}, status=status.HTTP_201_CREATED)
+        user = request.user
+        user.delete()
+        return Response({"message": "탈퇴 완료!"}, status=status.HTTP_201_CREATED)
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):

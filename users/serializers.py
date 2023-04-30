@@ -16,7 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, user, validated_data):
-        print("hi")
         user.name = validated_data.get('name', user.name)
         user.age = validated_data.get('age', user.age)
         user.gender = validated_data.get('gender', user.gender)
