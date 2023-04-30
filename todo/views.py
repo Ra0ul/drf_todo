@@ -6,6 +6,7 @@ from todo.serializers import TodoSerializer
 
 
 class TodoDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         todos = Todo.objects.all()
