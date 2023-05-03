@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from todo.models import Todo
-from todo.serializers import TodoSerializer
+from todo.serializers import TodoSerializer, TodoCreateSerializer
 
 
 class TodoDetailView(APIView):
@@ -14,7 +14,10 @@ class TodoDetailView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        pass
+        serializer = TodoCreateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "할일 작정 완료!"}, status=status.HTTP_201_CREATED)
 
     def put(self, request):
         pass

@@ -2,6 +2,12 @@ from rest_framework import serializers
 from todo.models import Todo
 
 
+class TodoCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Todo
+        fields = ("title", "is_complete")
+
+
 class TodoSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 

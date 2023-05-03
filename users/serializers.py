@@ -12,11 +12,13 @@ class UserSerializer(serializers.ModelSerializer):
             "gender",
             "age",
             "intro",
+            "password"
         )
 
     def create(self, validated_data):
         user = super().create(validated_data)
         password = user.password
+        print(password)
         user.set_password(password)
         user.save()
         return user
@@ -24,6 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
     def update(self, user, validated_data):
         user = super().update(validated_data)
         password = user.password
+
         user.set_password(password)
         user.save()
         return user
