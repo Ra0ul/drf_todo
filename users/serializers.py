@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
             "gender",
             "age",
             "intro",
-            "password"
+            "password"  # 암호필드추가
         )
 
     def create(self, validated_data):
