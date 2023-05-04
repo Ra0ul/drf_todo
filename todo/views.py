@@ -16,7 +16,7 @@ class TodoDetailView(APIView):
     def post(self, request):
         serializer = TodoCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(user=request.user)
         return Response({"message": "할일 작정 완료!"}, status=status.HTTP_201_CREATED)
 
     def put(self, request):

@@ -5,7 +5,12 @@ from todo.models import Todo
 class TodoCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
-        fields = ("title", "is_complete")
+        fields = "__all__"
+        extra_kwargs = {
+            "user": {
+                "required": False,
+            }
+        }
 
 
 class TodoSerializer(serializers.ModelSerializer):
